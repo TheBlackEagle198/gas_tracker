@@ -173,8 +173,13 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
                 } else {
-                  return Row(
+                  if (_currentIndex == 1) {
+                    return const StatisticsPage();
+                  }
+
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Summary(
                           currYear: _currentYear,
@@ -193,11 +198,12 @@ class _HomePageState extends State<HomePage> {
                             });
                           }
                       ),
+                      const Expanded(child: Center(child: Text("No data to show!"))),
                     ],
                   );
                 }
               }
-              return Center(child: const Icon(Icons.cancel_outlined, color: Colors.red,));
+              return const Center(child: Icon(Icons.cancel_outlined, color: Colors.red,));
             },
           ),
         ));

@@ -11,11 +11,11 @@ import 'package:gas_tracker/pages/subpages/Spendings.dart';
 import 'package:gas_tracker/pages/subpages/GasStations.dart';
 
 class StatisticsPage extends StatefulWidget {
-  final List<LogEntry> entries;
+  final List<LogEntry>? entries;
 
   const StatisticsPage({
     super.key,
-    required this.entries
+    this.entries
   });
 
   @override
@@ -24,12 +24,12 @@ class StatisticsPage extends StatefulWidget {
 
 class _StatisticsPageState extends State<StatisticsPage> {
   int _subPageNum = 0;
-  late List<LogEntry> entries;
+  List<LogEntry>? entries;
   late List<SubPage> subPages;
 
   List<Station> _getStations() {
     Map<GasStation, int> distinctStations = {};
-    for (LogEntry entry in entries) {
+    for (LogEntry entry in entries!) {
       distinctStations[entry.gasStation] = (distinctStations[entry.gasStation] ?? 0) + 1;
     }
 
@@ -66,7 +66,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   List<MonthData> _getSpendings() {
-    return LogEntry.splitByMonth(entries)
+    return LogEntry.splitByMonth(entries!)
         .entries
         .map((mapEntry) => MonthData(
             month: mapEntry.key,
@@ -76,7 +76,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   List<MonthData> _getConsumption() {
-    return LogEntry.splitByMonth(entries).entries
+    return LogEntry.splitByMonth(entries!).entries
         .map((entry) =>
               MonthData(
                 month: entry.key,
@@ -91,6 +91,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   void initState() {
     super.initState();
     entries = widget.entries;
+    if (entries == null) return;
     subPages = <SubPage>[
       SubPage(
           body: GasStationStatistics(stations: _getStations()),
@@ -106,6 +107,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (entries == null) {
+      return const Center(child: Text("No data to show!"));
+    }
+
     var tabs = subPages.map((e) => e.tab).toList();
     return DefaultTabController(
         length: tabs.length,
