@@ -54,11 +54,11 @@ class LogEntryService {
   static Future<List<LogEntry>?> getAllByYear(int year) async {
     final db = await _getDb();
     final yearSeconds = DateTime(year).millisecondsSinceEpoch ~/ 1000;
-    final prevYearSeconds = DateTime(year - 1).millisecondsSinceEpoch ~/ 1000;
+    final nextYearSeconds = DateTime(year + 1).millisecondsSinceEpoch ~/ 1000;
     final results = await db.query(
       _table,
       where: 'time < ? AND time > ?',
-      whereArgs: [yearSeconds, prevYearSeconds]
+      whereArgs: [nextYearSeconds, yearSeconds]
     );
 
     if (results.isEmpty) {
