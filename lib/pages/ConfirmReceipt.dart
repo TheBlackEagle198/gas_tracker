@@ -11,16 +11,25 @@ class ConfirmReceiptPage extends StatelessWidget {
     log(receiptData);
 
     final gasPriceExpression = RegExp(r'(\d*) *[.,] *(\d*) *A');
-    final quantityExpressionRompetrol = RegExp(r'(\d*) *[.,] *(\d*) *[xX] *(\d*) *[.,] *(\d*) *[Ll]');
-    final quantityExpressionPetrom = RegExp(r'(\d*) *[.,] *(\d*) *[Ll] *[xX] *(\d*) *[.,] *(\d*)');
+    final quantityPrice1 = RegExp(r'(\d*) *[.,] *(\d*) *[xX] *(\d*) *[.,] *(\d*) *[Ll]');
+    final quantityPrice2 = RegExp(r'(\d*) *[.,] *(\d*) *[Ll] *[xX] *(\d*) *[.,] *(\d*)');
 
     final totalMatch = gasPriceExpression.firstMatch(receiptData);
     double? total = double.tryParse('${totalMatch?.group(1)}.${totalMatch?.group(2)}');
 
-    final quantityMatch = quantityExpressionRompetrol.firstMatch(receiptData) ??
-        quantityExpressionPetrom.firstMatch(receiptData);
-    double? quantity = double.tryParse('${quantityMatch?.group(1)}.${quantityMatch?.group(2)}');
-    double? price = double.tryParse('${quantityMatch?.group(3)}.${quantityMatch?.group(4)}');
+    double? quantity;
+    double? price;
+
+    RegExpMatch? match = quantityPrice1.firstMatch(receiptData);
+    if (match != null) {
+      quantity = double.tryParse('${match.group(3)}.${match.group(4)}');
+      price = double.tryParse('${match.group(1)}.${match.group(2)}');
+    } else {
+      RegExpMatch? match = quantityPrice2.firstMatch(receiptData);
+      quantity = double.tryParse('${match?.group(1)}.${match?.group(2)}');
+      price = double.tryParse('${match?.group(3)}.${match?.group(4)}');
+    }
+
     GasStation? station;
     String normalizedReceiptData = receiptData.toLowerCase();
     if (normalizedReceiptData.toLowerCase().contains('petrom')) {
