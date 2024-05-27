@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               }
-              return const Icon(Icons.cancel_outlined, color: Colors.red,);
+              return Center(child: const Icon(Icons.cancel_outlined, color: Colors.red,));
             },
           ),
         ));
