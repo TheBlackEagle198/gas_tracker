@@ -15,6 +15,7 @@ class NumberField extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
         child: FormBuilderTextField (
           name: name,
+          cursorColor: Color(0xFF2355D6),
           controller: TextEditingController(text: defaultValue),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(

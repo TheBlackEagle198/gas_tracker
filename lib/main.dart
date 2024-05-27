@@ -12,6 +12,22 @@ Future<void> main() async {
   CameraDescription camera = cameras.where((description) => description.lensDirection == CameraLensDirection.back).toList().first;
   runApp(MaterialApp(
     initialRoute: 'home',
+    theme: ThemeData(
+      textSelectionTheme: TextSelectionThemeData(
+        selectionHandleColor: Color(0xFF2355D6)
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        floatingLabelStyle: TextStyle(
+            color: Color(0xFF2355D6)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xFF2355D6)
+          )
+        ),
+        focusColor: Color(0xFF2355D6)
+      )
+    ),
     routes: {
       'home': (context) => const HomePage(),
       'confirmReceipt': (context) => ConfirmReceiptPage(),
