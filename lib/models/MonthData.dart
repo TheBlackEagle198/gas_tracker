@@ -6,11 +6,11 @@ class MonthData {
 
   MonthData({required this.month, required this.data});
 
-  String getLongMonth() {
+  String get longMonth {
     return DateFormat('MMMM').format(DateTime(0, month));
   }
 
-  String getShortMonth() {
+  String get shortMonth {
     return DateFormat('MMMM').format(DateTime(0, month))[0];
   }
 

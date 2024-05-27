@@ -54,21 +54,18 @@ class LogEntry {
     for (int month = 1; month < 13; month++) {
       result[month] = entries
           .where((entry) =>
-      DateTime.fromMillisecondsSinceEpoch(entry.time * 1000).month ==
-          month)
+              DateTime.fromMillisecondsSinceEpoch(entry.time * 1000).month ==
+              month)
           .toList();
-      if (result[month]!.length == 0) result.remove(month);
+      if (result[month]!.isEmpty) result.remove(month);
     }
     return result;
   }
 
   static double averageConsumption(List<LogEntry> interval) {
-    int currDistance = 0;
-    double consumptionSum = 0;
-    for (int i = 0; i < interval.length - 1; i++) {
-      currDistance = interval[i].mileage - interval[i + 1].mileage;
-      consumptionSum += interval[i].fuelQuantity * 100 / currDistance;
-    }
-    return consumptionSum / (interval.length - 1);
+    return interval.fold(
+        0.0,
+        (previousValue, entry) =>
+            previousValue + (entry.fuelQuantity * 100 / entry.mileage)) / interval.length;
   }
 }

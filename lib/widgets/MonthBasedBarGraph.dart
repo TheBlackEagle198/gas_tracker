@@ -23,7 +23,7 @@ class MonthBasedBarGraph<T extends num> extends StatelessWidget {
             borderData: FlBorderData(show: false),
             barTouchData: BarTouchData(touchTooltipData: BarTouchTooltipData(
                 getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                  String text = '${data[groupIndex].getLongMonth()}\n${data[groupIndex].data.toStringAsFixed(0)}';
+                  String text = '${data[groupIndex].longMonth}\n${data[groupIndex].data.toStringAsFixed(2)}';
                   return BarTooltipItem(
                       text,
                       TextStyle(color: Colors.white)
@@ -60,7 +60,7 @@ class MonthBasedBarGraph<T extends num> extends StatelessWidget {
   Widget getBottomTitles(double value, TitleMeta meta) {
     Widget text;
     text = Text(
-      data[value.toInt()].getShortMonth(),
+      data[value.toInt()].shortMonth,
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
     );
     return SideTitleWidget(child: text, axisSide: meta.axisSide);

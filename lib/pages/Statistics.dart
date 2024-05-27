@@ -76,30 +76,15 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   List<MonthData> _getConsumption() {
-    List<MonthData> result = [];
-    var monthlyEntries = LogEntry.splitByMonth(entries);
-
-    int lastMonth = 0;
-    List<LogEntry> workingList = [];
-    // iterate over each month where there's a key set
-    for (var currMonth in monthlyEntries.keys) {
-      // add the rest of the entries for the current month
-      workingList.addAll(monthlyEntries[currMonth]!);
-      // insert the entry from the previous month if available
-      if (lastMonth > 0) {
-        workingList.add(monthlyEntries[lastMonth]!.last);
-      }
-
-      if (workingList.length > 1) {
-        // compute the average consumption for the interval
-        result.add(MonthData(month: currMonth, data: double.parse(LogEntry.averageConsumption(workingList).toStringAsFixed(2))));
-      }
-
-      lastMonth = currMonth;
-      workingList.clear();
-    }
-    log(result.toString());
-    return result;
+    return LogEntry.splitByMonth(entries).entries
+        .map((entry) =>
+              MonthData(
+                month: entry.key,
+                data: double.parse(
+                    LogEntry.averageConsumption(entry.value).toStringAsFixed(2)
+                )
+              )
+        ).toList();
   }
 
   @override

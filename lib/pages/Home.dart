@@ -111,29 +111,17 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.all(35.0),
                             child: ListView.builder(
                               itemBuilder: (context, index) {
-                                int? distanceTraveled;
-                                double? consumption;
+                                final consumption = items[index].fuelQuantity * 100 / items[index].mileage;
                                 log(items[index].toMap().toString());
-                                if (index < items.length - 1) {
-                                  // ignore the first item in the list
-                                  distanceTraveled =
-                                      items[index].mileage - items[index + 1].mileage;
-                                  if (distanceTraveled > 0) {
-                                    consumption = items[index].fuelQuantity * 100 / distanceTraveled;
-                                  } else {
-                                    consumption = 0;
-                                  }
-                                }
 
                                 return LogEntryCard(
                                   time: DateFormat('EEEE, d').format(
                                       DateTime.fromMillisecondsSinceEpoch(
                                           items[index].time * 1000)),
                                   quantity: items[index].fuelQuantity.toStringAsFixed(1),
-                                  distanceTraveled:
-                                      distanceTraveled?.toString() ?? '?',
+                                  distanceTraveled: items[index].mileage.toString(),
                                   price: items[index].price.toStringAsFixed(2),
-                                  consumption: consumption?.toStringAsFixed(2) ?? '?',
+                                  consumption: consumption.toStringAsFixed(2),
                                 );
                               },
                               itemCount: items.length,
