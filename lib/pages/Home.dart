@@ -22,6 +22,13 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   int _currentYear = DateTime.now().year;
 
+  void deleteEntry(LogEntry entry) async {
+    LogEntryService.delete(entry);
+    setState(() {
+      _entries = LogEntryService.getAllByYear(_currentYear);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -115,6 +122,40 @@ class _HomePageState extends State<HomePage> {
                                 log(items[index].toMap().toString());
 
                                 return LogEntryCard(
+                                  onLongPress: () async {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: const Text("Are you sure you want to delete this entry?"),
+                                            actionsAlignment: MainAxisAlignment.spaceAround,
+                                            backgroundColor: Color(0xFFDDE7FF),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    deleteEntry(items[index]);
+                                                    Navigator.pop(context);
+                                                  },
+                                                  style: ButtonStyle(
+                                                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2355D6)),
+                                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                                  ),
+                                                  child: Text("Yes")
+                                              ),
+                                              OutlinedButton (
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  style: ButtonStyle (
+                                                    foregroundColor: MaterialStateProperty.all<Color>(Color(0xFF2355D6)),
+                                                    side: MaterialStateProperty.all<BorderSide>(BorderSide(color: Color(0xFF2355D6)))
+                                                  ),
+                                                  child: Text("No"))
+                                            ],
+                                          );
+                                        }
+                                    );
+                                  },
                                   time: DateFormat('EEEE, d').format(
                                       DateTime.fromMillisecondsSinceEpoch(
                                           items[index].time * 1000)),
