@@ -21,12 +21,18 @@ class ConfirmReceiptPage extends StatelessWidget {
         quantityExpressionPetrom.firstMatch(receiptData);
     double? quantity = double.tryParse('${quantityMatch?.group(1)}.${quantityMatch?.group(2)}');
     double? price = double.tryParse('${quantityMatch?.group(3)}.${quantityMatch?.group(4)}');
-
+    GasStation? station;
+    String normalizedReceiptData = receiptData.toLowerCase();
+    if (normalizedReceiptData.toLowerCase().contains('petrom')) {
+      station = GasStation.Petrom;
+    } else if (normalizedReceiptData.toLowerCase().contains('rompetrol')) {
+      station = GasStation.Rompetrol;
+    }
     return {
       'total': total ?? '',
       'quantity': quantity ?? '',
       'price': price ?? '',
-      'gasStation': ''
+      'gasStation': station?.index
     };
   }
 

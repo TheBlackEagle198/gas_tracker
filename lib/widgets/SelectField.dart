@@ -6,13 +6,14 @@ class SelectField extends StatelessWidget {
   final String name;
   final String label;
   final List<DropdownOption> options;
-
+  final int? initialValue;
 
   const SelectField({
     super.key,
     required this.name,
     required this.label,
-    required this.options
+    required this.options,
+    this.initialValue
   });
 
   @override
@@ -23,6 +24,7 @@ class SelectField extends StatelessWidget {
           child: FormBuilderDropdown(
             name: name,
             isExpanded: true,
+            initialValue: initialValue,
             decoration: InputDecoration(
               labelText: label
             ),
