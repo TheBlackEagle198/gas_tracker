@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class SelectField extends StatelessWidget {
-  final DropdownOption defaultOption;
   final String name;
+  final String label;
   final List<DropdownOption> options;
+
 
   const SelectField({
     super.key,
-    required this.defaultOption,
     required this.name,
+    required this.label,
     required this.options
   });
 
@@ -21,10 +23,16 @@ class SelectField extends StatelessWidget {
           child: FormBuilderDropdown(
             name: name,
             isExpanded: true,
+            decoration: InputDecoration(
+              labelText: label
+            ),
             items: options.map((option) => DropdownMenuItem(
               child: Text(option.text),
               value: option.value,
             )).toList(),
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required()
+            ]),
           ),
         )
     );

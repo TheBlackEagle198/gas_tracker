@@ -26,7 +26,7 @@ class _ReceiptFormState extends State<ReceiptForm> {
           NumberField(name: 'total', defaultValue: widget.data['total'].toString(), label: 'Total',),
           NumberField(name: 'quantity', defaultValue: widget.data['quantity'].toString(), label: 'Fuel Quantity',),
           NumberField(name: 'price', defaultValue: widget.data['price'].toString(), label: 'Price/l',),
-          SelectField(name: 'gasStation', defaultOption: DropdownOption(text: "Petrom", value: GasStation.Petrom.index), options: [
+          SelectField(name: 'gasStation', label: "Gas station", options: [
             DropdownOption(text: "Rompetrol", value: GasStation.Rompetrol.index),
             DropdownOption(text: "Petrom", value: GasStation.Petrom.index)
           ],),
