@@ -41,6 +41,15 @@ class LogEntryService {
     return await db.insert(_table, entry.toMap());
   }
 
+  static Future<int> delete(LogEntry entry) async {
+    final db = await _getDb();
+    return db.delete(
+      _table,
+      where: "id = ?",
+      whereArgs: [entry.id]
+    );
+  }
+
   static Future<List<LogEntry>?> getAll() async {
     final db = await _getDb();
     final result = await db.query(_table);
