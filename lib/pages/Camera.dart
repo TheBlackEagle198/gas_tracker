@@ -75,6 +75,7 @@ class _CameraPageState extends State<CameraPage> {
 
       final inputImage = InputImage.fromFilePath(croppedFile!.path);
       String recognizedText = (await _textRecognizer.processImage(inputImage)).text;
+      log("Recognized: $recognizedText");
       _goToNextForm(recognizedText);
     } catch (e) {
       log(e.toString());

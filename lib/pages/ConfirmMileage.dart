@@ -8,7 +8,7 @@ class ConfirmMileagePage extends StatelessWidget {
   const ConfirmMileagePage({super.key});
 
   Map _parseReceipt(String receiptData) {
-    String mileageString = '${RegExp(r'\d * ').firstMatch(receiptData)?.group(0) ?? 0}';
+    String mileageString = '${RegExp(r'\d+').firstMatch(receiptData)?.group(0) ?? 0}';
     int mileage = (int.tryParse(mileageString) ?? 1) ~/ 10; // get rid of the last number
     return {
       'mileage': mileage > 0 ? mileage : ''
