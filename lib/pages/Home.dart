@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                                         }
                                     );
                                   },
-                                  time: DateFormat('EEEE, d').format(
+                                  time: DateFormat('EEEE, d MMM').format(
                                       DateTime.fromMillisecondsSinceEpoch(
                                           items[index].time * 1000)),
                                   quantity: items[index].fuelQuantity.toStringAsFixed(1),
